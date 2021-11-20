@@ -30,6 +30,9 @@ module.exports = (sequelize) => {
     },
     weigth: {
       type: DataTypes.INTEGER
+    },
+    image: {
+      type: DataTypes.STRING
     }
   });
 };
