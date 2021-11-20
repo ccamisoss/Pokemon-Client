@@ -24,7 +24,7 @@ const axios = require('axios')
 
 
 // Syncing all the models at once.
-conn.sync({ force: false }).then(async () => {
+conn.sync({ force: true }).then(async () => {
   let db = await Tipo.findAll();
 
   if (db.length < 1) {

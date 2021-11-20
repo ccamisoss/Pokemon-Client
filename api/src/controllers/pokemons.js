@@ -4,9 +4,9 @@ const { Pokemon, Tipo } = require("../db");
 module.exports = {
   getAll: async (req, res, next) => {
     try {
-      let name = req.query.name.toLowerCase();
+      let name = req.query.name;
       if (name) {
-        let db = await Pokemon.findOne({ where: { name: name }, include: Tipo });
+        let db = await Pokemon.findOne({ where: { name: name.toLowerCase() }, include: Tipo });
         if (!db) {
           axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then((r) => {
             res.json({
