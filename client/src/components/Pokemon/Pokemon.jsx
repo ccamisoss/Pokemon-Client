@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import  ""
 
 export function Pokemon({ name, image, types, id }) {
   return (
