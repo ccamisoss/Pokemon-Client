@@ -4,7 +4,7 @@ export function SearchBar(){
      <div>
          <div>
          <input type="text" placeholder="Search..."/>
-         <button>Buscar pokemon</button>    
+         <button>Buscar Pokemon</button>    
          </div>
          <select name="Orden alfabetico" id="">
              <option value="asc">Nombre ascendente</option>

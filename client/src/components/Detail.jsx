@@ -14,14 +14,12 @@ export function Detail(props) {
 
   return (
     <div>
-      <NavBar/>
-      <h2>
-        {poke.name?.charAt(0).toUpperCase() + poke.name?.slice(1)}
-      </h2>
+      <NavBar />
+      <h2>{poke.name}</h2>
       <img src={poke.image} alt="" />
       Tipos:
       {poke.types?.map((t) => (
-        <span> {t.charAt(0).toUpperCase() + t.slice(1)}. </span>
+        <span> {t}. </span>
       ))}
       <ul>
         <li>Id: {poke.id}</li>
