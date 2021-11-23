@@ -1,0 +1,31 @@
+.pokeImg{
+    height: 100px;
+    display:block
+}
+
+.contenedor{
+    width: 180px;
+    background-color: white;
+    align-items: center;
+    border:1mm outset rgb(224, 224, 224);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    gap: 5px;
+}
+
+.nav{
+    text-decoration: none;
+    color: black;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h5{
+    display: inline
+}
+
+h3{
+    margin: 0
+}

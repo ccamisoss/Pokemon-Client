@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Pokemon } from "./Pokemon";
 import { SearchBar } from "./SearchBar";
 import { NavBar } from "./NavBar";
-import "../styles/Home.modules.css";
+import styles from "../styles/Home.module.css";
 
 export function Home() {
   const dispatch = useDispatch();
@@ -21,14 +21,20 @@ export function Home() {
   }
 
   return (
-    <div>
+    <div className={styles.contenedor}>
       <NavBar />
-      <img src="https://64.media.tumblr.com/64d85789e75bcc90a48e90fd2645a99d/59aed066c4bf4be6-ba/s500x750/82199e7f865a3e1f494bb3d8d12a86ccfef47e2f.png" alt="" />
+      <img
+        className={styles.logo}
+        src="https://64.media.tumblr.com/64d85789e75bcc90a48e90fd2645a99d/59aed066c4bf4be6-ba/s500x750/82199e7f865a3e1f494bb3d8d12a86ccfef47e2f.png"
+        alt=""
+      />
       <SearchBar />
       {/* <button onClick={(e) => handleClick(e)}>Recargar Pokemons</button> */}
-      {pokemons.map((p) => (
-        <Pokemon name={p.name} image={p.image} types={p.types} id={p.id} />
-      ))}
+      <div className={styles.pokeContainer}>
+        {pokemons.map((p) => (
+          <Pokemon name={p.name} image={p.image} types={p.types} id={p.id} />
+        ))}
+      </div>
     </div>
   );
 }

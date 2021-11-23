@@ -1,16 +1,19 @@
-import { Link } from "react-router-dom";
-import "../styles/Pokemon.modules.css"
+import { NavLink } from "react-router-dom";
+import styles from "../styles/Pokemon.module.css";
 
 export function Pokemon({ name, image, types, id }) {
   return (
-    <Link to={`/pokemon/${id}`}>
-      <div>
+    <NavLink className={styles.nav} to={`/pokemon/${id}`}>
+      <div className={styles.contenedor}>
         <h3>{name}</h3>
-        <img src={image} alt="" />
-        {types.map((t) => (
-          <h5>{t}</h5>
-        ))}
+        <img className={styles.pokeImg} src={image} alt="" />
+        <div>
+          <h5>Tipos: </h5>
+          {types.map((t) => (
+            <h5>{t}. </h5>
+          ))}
+        </div>
       </div>
-    </Link>
+    </NavLink>
   );
 }
