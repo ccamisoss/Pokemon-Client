@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-export function Pokemon({ name, image, types }) {
+export function Pokemon({ name, image, types, id }) {
   return (
-    <Link to="/detail">
+    <Link to={`/pokemon/${id}`}>
       <div>
         <h3>{name}</h3>
         <img src={image} alt="" />

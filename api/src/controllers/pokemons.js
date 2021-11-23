@@ -1,5 +1,6 @@
 const axios = require("axios");
 const { Pokemon, Tipo } = require("../db");
+const fs = require('fs')
 
 module.exports = {
   getAll: async (req, res, next) => {
@@ -10,6 +11,7 @@ module.exports = {
         if (!db) {
           axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then((r) => {
             res.json({
+              id: r.data.id,
               name: name,
               image: r.data.sprites.front_default,
               types: r.data.types.map((t) => t.type.name),
@@ -17,6 +19,7 @@ module.exports = {
           },() => res.send('No se encontró el pokemon solicitado'));
         } else {
           res.json({
+              id: db.id,
               name: db.name,
               image: db.image,
               types: db.tipos.map((t) => t.name)
@@ -26,6 +29,7 @@ module.exports = {
         let db = await Pokemon.findAll({include:Tipo})
         let formatted = db.map(p => {
             return{
+                id: p.id,
                 name: p.name,
                 image: p.image,
                 types: p.tipos.map((t) => t.name)
@@ -43,6 +47,7 @@ module.exports = {
           ).then((array) => {
             let result = array.map((poke) => {
               return {
+                id: poke.info.id,
                 name: poke.name,
                 image: poke.info.sprites.front_default,
                 types: poke.info.types.map((t) => t.type.name),
@@ -95,7 +100,7 @@ module.exports = {
   createPoke: async (req, res, next) => {
     try {
       let { pokemon, tipos } = req.body;
-      pokemon = {...pokemon, image: "https://pbs.twimg.com/profile_images/1178942318981701634/d5qM22Ft_400x400.jpg"}
+      pokemon = {...pokemon, image: fs.readFileSync('./images/prueba.png') }
       Pokemon.create(pokemon).then(async (p) => {
         // agrego los tipos
         tipos.map(async (t) => {
@@ -106,8 +111,7 @@ module.exports = {
           where: { name: pokemon.name },
           include: Tipo,
         });
-        if (r.length < 1) res.json(":(");
-        else res.json(r);
+        res.json(r);
       });
     } catch (error) {
       next(error);
