@@ -100,7 +100,7 @@ module.exports = {
   createPoke: async (req, res, next) => {
     try {
       let { pokemon, tipos } = req.body;
-      pokemon = {...pokemon, image: "https://64.media.tumblr.com/a3699ee399281155e40b6f06154863f9/259eb3856bc67e1e-b2/s540x810/2668f32fd1b2e43b26f832e22986deb4347cfe1f.png" }
+      pokemon = {...pokemon, image: "https://64.media.tumblr.com/e3b1c855ebcbe33d1f7dc55d25335a93/5150765739d24b24-93/s540x810/b0d751a165cf947d89e3af30fbe3d77e2f4a9566.png" }
       Pokemon.create(pokemon).then(async (p) => {
         // agrego los tipos
         tipos.map(async (t) => {

@@ -16,7 +16,7 @@ export function Detail(props) {
     <div>
       <NavBar/>
       <h2>
-        {`${poke.id}. ${poke.name?.charAt(0).toUpperCase() + poke.name?.slice(1)}`}
+        {poke.name?.charAt(0).toUpperCase() + poke.name?.slice(1)}
       </h2>
       <img src={poke.image} alt="" />
       Tipos:
@@ -24,7 +24,7 @@ export function Detail(props) {
         <span> {t.charAt(0).toUpperCase() + t.slice(1)}. </span>
       ))}
       <ul>
-        {/* <li>Id: {poke.id}</li> */}
+        <li>Id: {poke.id}</li>
         <li>Vida: {poke.hp}</li>
         <li>Ataque: {poke.attack}</li>
         <li>Defensa: {poke.defense}</li>

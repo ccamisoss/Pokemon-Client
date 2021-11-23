@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Pokemon } from "./Pokemon";
 import { SearchBar } from "./SearchBar";
 import { NavBar } from "./NavBar"
+import "../styles/Home.modules.css"
 
 export function Home() {
   const dispatch = useDispatch();
