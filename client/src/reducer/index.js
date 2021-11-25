@@ -1,34 +1,61 @@
-import { GET_POKEMONS, GET_BY_ID, GET_TYPES, GET_BY_NAME } from "../actions";
+import {
+  GET_POKEMONS,
+  GET_BY_ID,
+  GET_TYPES,
+  GET_BY_NAME,
+  FILTER_BY_TYPE,
+  FILTER_BY_ORIGIN
+} from "../actions";
 
-const initialState={
-    pokemons:[],
-    detalle:{},
-    tipos:[]
-}
+const initialState = {
+  pokemons: [],
+  allPokemons: [],
+  detalle: {},
+  tipos: [],
+};
 
-export default function rootReducer(state = initialState, action){
-    switch(action.type){
-        case GET_POKEMONS:
-            return{
-                ...state,
-                pokemons: action.payload
-            }
-        case GET_BY_NAME:
-            return{
-                ...state,
-                pokemons: [action.payload]
-            }
-        case GET_BY_ID:
-            return{
-                ...state,
-                detalle: action.payload
-            }
+export default function rootReducer(state = initialState, action) {
+  switch (action.type) {
+    case GET_POKEMONS:
+      return {
+        ...state,
+        pokemons: action.payload,
+        allPokemons: action.payload,
+      };
+    case GET_BY_NAME:
+      return {
+        ...state,
+        pokemons: [action.payload],
+      };
+    case GET_BY_ID:
+      return {
+        ...state,
+        detalle: action.payload,
+      };
+    case FILTER_BY_TYPE:
+      let filteredPokes = action.payload === "all"? state.allPokemons
+        : state.allPokemons.filter((p) =>
+              p.types.includes(
+                action.payload.charAt(0).toUpperCase() + action.payload.slice(1)
+              )
+            );
+      return {
+        ...state,
+        pokemons: filteredPokes,
+      };
+    case FILTER_BY_ORIGIN:
+      let pokesByOrigin = action.payload === "db"? state.allPokemons.filter(p => p.createdInDB)
+        : state.allPokemons.filter(p => !p.createdInDB)
+      return{
+          ...state,
+          pokemons: pokesByOrigin
+      }
         case GET_TYPES:
-            return{
-                ...state,
-                tipos: action.payload
-            }
-        default:
-            return state;
-    }
+      return {
+        ...state,
+        tipos: action.payload,
+      };
+    default:
+      return state;
+  }
 }

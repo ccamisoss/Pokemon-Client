@@ -45,12 +45,13 @@ module.exports = {
             id: p.id,
             name: p.name.charAt(0).toUpperCase() + p.name.slice(1),
             image: p.image,
+            createdInDB: true,
             types: p.tipos.map(
               (t) => t.name.charAt(0).toUpperCase() + t.name.slice(1)
             ),
           };
         });
-        axios.get("https://pokeapi.co/api/v2/pokemon/").then((r) => {
+        axios.get("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=40").then((r) => {
           Promise.all(
             r.data.results.map(async (p) => {
               let pokeInfo = await axios.get(p.url);
@@ -65,6 +66,7 @@ module.exports = {
                 id: poke.info.id,
                 name: poke.name.charAt(0).toUpperCase() + poke.name.slice(1),
                 image: poke.info.sprites.front_default,
+                createdInDB: false,
                 types: poke.info.types.map(
                   (t) =>
                     t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)

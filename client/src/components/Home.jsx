@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
-import { useEffect } from "react";
-import { getAllPokemons } from "../actions";
+import { useEffect, useState } from "react";
+import { getAllPokemons, getTypes } from "../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Pokemon } from "./Pokemon";
 import { SearchBar } from "./SearchBar";
 import { NavBar } from "./NavBar";
 import styles from "../styles/Home.module.css";
+import Paginado from "./Paginado";
 
 export function Home() {
   const dispatch = useDispatch();
@@ -13,12 +14,16 @@ export function Home() {
 
   useEffect(() => {
     dispatch(getAllPokemons());
-  });
+    dispatch(getTypes());
+  },[dispatch]);
 
-  function handleClick(e) {
-    e.preventDefault();
-    dispatch(getAllPokemons());
-  }
+  // Paginado:
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pokemonsPerPage, setPokemonsPerPage] = useState(12);
+  const indexOfLastPokemon = currentPage * pokemonsPerPage;
+  const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
+  const currentPokemons = pokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
+  const paginado = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className={styles.contenedor}>
@@ -29,10 +34,14 @@ export function Home() {
         alt=""
       />
       <SearchBar />
-      {/* <button onClick={(e) => handleClick(e)}>Recargar Pokemons</button> */}
+      <Paginado
+        pokemonsPerPage={pokemonsPerPage}
+        pokemons={pokemons.length}
+        paginado={paginado}
+      />
       <div className={styles.pokeContainer}>
-        {pokemons.map((p) => (
-          <Pokemon name={p.name} image={p.image} types={p.types} id={p.id} />
+        {currentPokemons?.map((p) => (
+          <Pokemon name={p.name} image={p.image} types={p.types} id={p.id} key={p.id}/>
         ))}
       </div>
     </div>

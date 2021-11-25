@@ -4,7 +4,7 @@
     flex-direction: row-reverse;
 }
 
-button{
+.button{
     height: 30px;
     border-radius: 10px;
     border: 1mm solid rgb(49, 49, 243);

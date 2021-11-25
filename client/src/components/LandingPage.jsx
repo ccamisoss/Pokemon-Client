@@ -9,7 +9,7 @@ export function LandingPage(){
         <div className={styles.contenedor}>
             <img src={logo} className={styles.pic} alt="" />
             <Link to="/home">
-            <button>Comenzar</button>
+            <button className={styles.button}>POKEMON</button>
             </Link>
             <img src={gang} className={styles.pic} alt="" />
         </div>

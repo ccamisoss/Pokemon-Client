@@ -9,8 +9,8 @@ export function Pokemon({ name, image, types, id }) {
         <img className={styles.pokeImg} src={image} alt="" />
         <div>
           <h5>Tipos: </h5>
-          {types.map((t) => (
-            <h5>{t}. </h5>
+          {types.map((t,i) => (
+            <h5 key={i}>{t}. </h5>
           ))}
         </div>
       </div>
