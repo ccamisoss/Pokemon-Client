@@ -4,7 +4,9 @@ import {
   GET_TYPES,
   GET_BY_NAME,
   FILTER_BY_TYPE,
-  FILTER_BY_ORIGIN
+  FILTER_BY_ORIGIN,
+  ORDER_BY_NAME,
+  ORDER_BY_ATTACK
 } from "../actions";
 
 const initialState = {
@@ -33,8 +35,10 @@ export default function rootReducer(state = initialState, action) {
         detalle: action.payload,
       };
     case FILTER_BY_TYPE:
-      let filteredPokes = action.payload === "all"? state.allPokemons
-        : state.allPokemons.filter((p) =>
+      let filteredPokes =
+        action.payload === "all"
+          ? state.allPokemons
+          : state.allPokemons.filter((p) =>
               p.types.includes(
                 action.payload.charAt(0).toUpperCase() + action.payload.slice(1)
               )
@@ -44,17 +48,51 @@ export default function rootReducer(state = initialState, action) {
         pokemons: filteredPokes,
       };
     case FILTER_BY_ORIGIN:
-      let pokesByOrigin = action.payload === "db"? state.allPokemons.filter(p => p.createdInDB)
-        : state.allPokemons.filter(p => !p.createdInDB)
-      return{
-          ...state,
-          pokemons: pokesByOrigin
-      }
-        case GET_TYPES:
+      let pokesByOrigin =
+        action.payload === "db"
+          ? state.allPokemons.filter((p) => p.createdInDB)
+          : state.allPokemons.filter((p) => !p.createdInDB);
+      return {
+        ...state,
+        pokemons: pokesByOrigin,
+      };
+    case GET_TYPES:
       return {
         ...state,
         tipos: action.payload,
       };
+    case ORDER_BY_NAME:
+      let sortedArr= action.payload === "asc"? 
+      state.pokemons.sort((a,b) => {
+        if(a.name > b.name) return 1;
+        if(b.name > a.name) return -1;
+        return 0;
+      }) :
+      state.pokemons.sort((a,b) => {
+        if(a.name > b.name) return -1;
+        if(b.name > a.name) return 1;
+        return 0;
+      });
+      return{
+        ...state,
+        pokemons: sortedArr
+      }
+      case ORDER_BY_ATTACK:
+      let sortedArr2= action.payload === "asc"? 
+      state.pokemons.sort((a,b) => {
+        if(a.attack > b.attack) return 1;
+        if(b.attack > a.attack) return -1;
+        return 0;
+      }) :
+      state.pokemons.sort((a,b) => {
+        if(a.attack > b.attack) return -1;
+        if(b.attack > a.attack) return 1;
+        return 0;
+      });
+      return{
+        ...state,
+        pokemons: sortedArr2
+      }
     default:
       return state;
   }

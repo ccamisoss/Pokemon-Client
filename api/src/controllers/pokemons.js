@@ -6,11 +6,11 @@ module.exports = {
     try {
       let name = req.query.name;
       if (name) {
-        let db = await Pokemon.findAll({
+        let db = await Pokemon.findOne({
           where: { name: name.toLowerCase() },
           include: Tipo,
         });
-        if (db.length < 1) {
+        if (!db) {
           axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then(
             (r) => {
               res.json({
@@ -26,17 +26,14 @@ module.exports = {
             () => res.send("No se encontró el pokemon solicitado")
           );
         } else {
-          let r = db.map((p) => {
-            return {
-              id: p.id,
-              name: p.name.charAt(0).toUpperCase() + p.name.slice(1),
-              image: p.image,
-              types: p.tipos.map(
+          res.json({
+              id: db.id,
+              name: db.name.charAt(0).toUpperCase() + db.name.slice(1),
+              image: db.image,
+              types: db.tipos.map(
                 (t) => t.name.charAt(0).toUpperCase() + t.name.slice(1)
               ),
-            };
-          });
-          res.json(r);
+            });
         }
       } else {
         let db = await Pokemon.findAll({ include: Tipo });

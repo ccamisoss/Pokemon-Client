@@ -6,6 +6,8 @@ export const GET_BY_NAME = "GET_BY_NAME";
 export const CREATE_POKEMON = "CREATE_POKEMON";
 export const FILTER_BY_TYPE = "FILTER_BY_TYPE";
 export const FILTER_BY_ORIGIN = "FILTER_BY_ORIGIN";
+export const ORDER_BY_NAME = "ORDER_BY_NAME";
+export const ORDER_BY_ATTACK = "ORDER_BY_ATTACK";
 
 export function getAllPokemons() {
   return async function (dispatch) {
@@ -64,5 +66,19 @@ export const filterPokemonsByOrigin = (payload) => {
   return{
     type: "FILTER_BY_ORIGIN",
     payload: payload
+  }
+}
+
+export const orderByName = (payload) => {
+  return{
+    type: "ORDER_BY_NAME",
+    payload
+  }
+}
+
+export const orderByAttack = (payload) => {
+  return{
+    type: "ORDER_BY_ATTACK",
+    payload
   }
 }

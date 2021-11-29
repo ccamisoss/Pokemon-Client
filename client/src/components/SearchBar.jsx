@@ -1,7 +1,17 @@
+/* eslint-disable no-unused-vars */
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { filterPokemonsByType, filterPokemonsByOrigin, getByName } from "../actions/index";
+import {
+  filterPokemonsByType,
+  filterPokemonsByOrigin,
+  getByName,
+  orderByName,
+  orderByAttack,
+} from "../actions/index";
 
-export function SearchBar() {
+export function SearchBar({ functionSet }) {
+  const [pokeName, setPokeName] = useState("")
+  const [orden, setOrden] = useState("")
   const dispatch = useDispatch();
   const tipos = useSelector((state) => state.tipos);
 
@@ -13,21 +23,41 @@ export function SearchBar() {
     dispatch(filterPokemonsByOrigin(e.target.value));
   };
 
-  const handleSearchByName = (e) => {
-    dispatch(getByName(e.target.value))
+  const handleSortByName = (e) => {
+    e.preventDefault();
+    dispatch(orderByName(e.target.value));
+    functionSet();
+    setOrden("Ordenado "+ e.target.value)
+  };
+
+ const handleSortByAttack = (e) => {
+    e.preventDefault();
+    dispatch(orderByAttack(e.target.value));
+    functionSet();
+    setOrden("Ordenado "+ e.target.value)
+  };
+
+  const handleChange = (e) => {
+    setPokeName(e.target.value)
   }
+
+  const handleSearchByName = (e) => {
+    e.preventDefault();
+    dispatch(getByName(pokeName));
+    setPokeName("")
+  };
 
   return (
     <div>
       <div>
-        <input type="text" placeholder="Search..." value="" />
-        <button onClick={e => handleSearchByName(e)}>Buscar Pokemon</button>
+        <input type="text" placeholder="Search..." value={pokeName} onChange={handleChange} />
+        <button onClick={(e) => handleSearchByName(e)}>Buscar Pokemon</button>
       </div>
-      <select>
+      <select onChange={(e) => handleSortByName(e)}>
         <option value="asc">Nombre ascendente</option>
         <option value="desc">Nombre descendente</option>
       </select>
-      <select>
+      <select onChange={(e) => handleSortByAttack(e)}>
         <option value="asc">Fuerza ascendente</option>
         <option value="desc">Fuerza descendente</option>
       </select>

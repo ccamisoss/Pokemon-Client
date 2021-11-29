@@ -24,7 +24,7 @@ export function Home() {
   const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
   const currentPokemons = pokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
   const paginado = (pageNumber) => setCurrentPage(pageNumber);
-
+ 
   return (
     <div className={styles.contenedor}>
       <NavBar />
@@ -33,7 +33,7 @@ export function Home() {
         src="https://64.media.tumblr.com/64d85789e75bcc90a48e90fd2645a99d/59aed066c4bf4be6-ba/s500x750/82199e7f865a3e1f494bb3d8d12a86ccfef47e2f.png"
         alt=""
       />
-      <SearchBar />
+      <SearchBar/>
       <Paginado
         pokemonsPerPage={pokemonsPerPage}
         pokemons={pokemons.length}

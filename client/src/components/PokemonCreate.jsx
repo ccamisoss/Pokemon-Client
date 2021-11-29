@@ -1,45 +1,92 @@
 import { NavBar } from "./NavBar";
+import styles from "../styles/PokemonCreate.module.css";
+import { useState } from "react";
+import { createPoke } from "../actions";
+import { useDispatch, useSelector } from "react-redux";
 
 export function PokemonCreate() {
+  const dispatch = useDispatch();
+  const types = useSelector((state) => state.tipos);
+  const [p, setPokemon] = useState({
+    name: "",
+    height: "",
+    weight: "",
+    hp: "",
+    attack: "",
+    defense: "",
+    speed: "",
+    type: []
+  });
+
+  const handleChange = (e) => {
+    setPokemon({
+      ...p,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      createPoke({
+        pokemon: {
+          name: p.name,
+          height: parseInt(p.height),
+          weight: parseInt(p.weight),
+          hp: parseInt(p.hp),
+          attack: parseInt(p.attack),
+          defense: parseInt(p.defense),
+          speed: parseInt(p.speed),
+        },
+        tipos: p.type,
+      })
+    );
+    window.location.reload()
+    alert("El pokemon ha sido creado con exito!");
+  };
+
+  const handleSelect = (e) => {
+    if (!p.type.includes(e.target.value)) {
+      setPokemon({
+        ...p,
+        type: [...p.type, e.target.value],
+      });
+    } else {
+      setPokemon({
+        ...p,
+        type: p.type.filter((t) => t !== e.target.value),
+      });
+    }
+  };
+
   return (
-    <div>
+    <div className={styles.fragment}>
       <NavBar />
-      <form action="">
+      <form onSubmit={handleSubmit} className={styles.contenedor}>
         <label>Nombre del Pokemon:</label>
-        <input type="text" />
-        <label htmlFor="">Altura:</label>
-        <input type="text" />
-        <label htmlFor="">Peso:</label>
-        <input type="text" />
-        <label htmlFor="">Vida:</label>
-        <input type="text" />
-        <label htmlFor="">Ataque:</label>
-        <input type="text" />
-        <label htmlFor="">Defensa:</label>
-        <input type="text" />
-        <label htmlFor="">Velocidad:</label>
-        <input type="text" />
-        <label htmlFor="">Tipo de Pokemon:</label>
-        <input type="checkbox" name="Normal" id="Nor" />
-        {/* <input type="checkbox" name="" id="" >Fighting</input>
-            <input type="checkbox" name="" id="" >Flying</input>
-            <input type="checkbox" name="" id="" >Poison</input>
-            <input type="checkbox" name="" id="" >Ground</input>
-            <input type="checkbox" name="" id="" >Rock</input>
-            <input type="checkbox" name="" id="" >Bug</input>
-            <input type="checkbox" name="" id="" >Ghost</input>
-            <input type="checkbox" name="" id="" >Steel</input>
-            <input type="checkbox" name="" id="" >Fire</input>
-            <input type="checkbox" name="" id="" >Water</input>
-            <input type="checkbox" name="" id="" >Grass</input>
-            <input type="checkbox" name="" id="" >Electric</input>
-            <input type="checkbox" name="" id="" >Psychic</input>
-            <input type="checkbox" name="" id="" >Ice</input>
-            <input type="checkbox" name="" id="" >Dragon</input>
-            <input type="checkbox" name="" id="" >Dark</input>
-            <input type="checkbox" name="" id="" >Fairy</input>
-            <input type="checkbox" name="" id="" >Shadow</input> */}
-        <button>Crear Pokemon</button>
+        <input name="name" value={p.name} onChange={handleChange} />
+        <label>Altura:</label>
+        <input name="height" value={p.height} onChange={handleChange} />
+        <label>Peso:</label>
+        <input name="weight" value={p.weight} onChange={handleChange} />
+        <label>Vida:</label>
+        <input name="hp" value={p.hp} onChange={handleChange} />
+        <label>Ataque:</label>
+        <input name="attack" value={p.attack} onChange={handleChange} />
+        <label>Defensa:</label>
+        <input name="defense" value={p.defense} onChange={handleChange} />
+        <label>Velocidad:</label>
+        <input name="speed" value={p.speed} onChange={handleChange} />
+        <label>Tipo de Pokemon:</label>
+        <div className={styles.select}>
+          {types?.map((t) => (
+            <label>
+              <input type="checkbox" value={t.name} onClick={handleSelect} />
+              {t.name.charAt(0).toUpperCase() + t.name?.slice(1)}
+            </label>
+          ))}
+        </div>
+        <button >Crear Pokemon</button>
       </form>
     </div>
   );

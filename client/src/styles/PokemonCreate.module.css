@@ -1,0 +1,23 @@
+.contenedor {
+  padding: 30px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 400px;
+  height: 600px;
+  border: 1.5mm outset rgb(224, 224, 224);
+  border-radius: 10px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.select{
+    margin: 5px;
+    display: grid;
+    grid-template-columns: 200px 200px ;
+}
+
+.fragment{
+    padding-bottom: 10px;
+}
