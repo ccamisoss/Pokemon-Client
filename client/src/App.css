@@ -1,3 +1,8 @@
+@font-face{
+    font-family: PressStart2p;
+    src: url(./styles/fonts/PressStart2P.ttf);
+}
+
 body {
     text-align: center;
     background: url(../src/styles/images/3952024.png) no-repeat center center fixed; 
@@ -5,4 +10,17 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+div, button, option, select, input{
+    font-family: PressStart2p;
+    font-size: xx-small;
+}
+
+input, button{
+    border-radius: 5px;
+}
+
+select, input,button{
+    padding: 5px;
 }

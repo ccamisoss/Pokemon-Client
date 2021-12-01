@@ -1,6 +1,6 @@
 
 .pokeContainer {
-  padding: 20px; 
+  padding: 15px; 
   display: grid;
   grid-template-columns: 200px 200px 200px;
   grid-column-gap: 20px;
@@ -9,5 +9,15 @@
 }
 
 .logo {
-  height: 100px;
+  height: 130px;
+}
+
+.notFound{
+    width: fit-content;
+    background-color: white;
+    border:1mm outset rgb(224, 224, 224);
+    border-radius: 10px;
+    padding: 10px;
+    margin: auto;
+    margin-top: 45px;
 }

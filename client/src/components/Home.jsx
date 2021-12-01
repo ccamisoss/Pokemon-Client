@@ -15,7 +15,7 @@ export function Home() {
   useEffect(() => {
     dispatch(getAllPokemons());
     dispatch(getTypes());
-  },[dispatch]);
+  }, [dispatch]);
 
   // Paginado:
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,26 +24,43 @@ export function Home() {
   const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
   const currentPokemons = pokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
   const paginado = (pageNumber) => setCurrentPage(pageNumber);
- 
-  return (
-    <div className={styles.contenedor}>
-      <NavBar />
-      <img
-        className={styles.logo}
-        src="https://64.media.tumblr.com/64d85789e75bcc90a48e90fd2645a99d/59aed066c4bf4be6-ba/s500x750/82199e7f865a3e1f494bb3d8d12a86ccfef47e2f.png"
-        alt=""
-      />
-      <SearchBar/>
-      <Paginado
-        pokemonsPerPage={pokemonsPerPage}
-        pokemons={pokemons.length}
-        paginado={paginado}
-      />
-      <div className={styles.pokeContainer}>
-        {currentPokemons?.map((p) => (
-          <Pokemon name={p.name} image={p.image} types={p.types} id={p.id} key={p.id}/>
-        ))}
+  console.log(currentPokemons);
+
+  if (
+    currentPokemons.length > 0 &&
+    currentPokemons[0] !== "No se encontró el pokemon solicitado"
+  ) {
+    return (
+      <div className={styles.contenedor}>
+        <NavBar />
+        <img
+          className={styles.logo}
+          src="https://64.media.tumblr.com/64d85789e75bcc90a48e90fd2645a99d/59aed066c4bf4be6-ba/s500x750/82199e7f865a3e1f494bb3d8d12a86ccfef47e2f.png"
+          alt=""
+        />
+        <SearchBar />
+        <Paginado pokemonsPerPage={pokemonsPerPage} pokemons={pokemons.length} paginado={paginado}/>
+        <div className={styles.pokeContainer}>
+          {currentPokemons?.map((p) => (
+            <Pokemon name={p.name} image={p.image} types={p.types} id={p.id} key={p.id}/>
+          ))}
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div className={styles.contenedor}>
+        <NavBar />
+        <img
+          className={styles.logo}
+          src="https://64.media.tumblr.com/64d85789e75bcc90a48e90fd2645a99d/59aed066c4bf4be6-ba/s500x750/82199e7f865a3e1f494bb3d8d12a86ccfef47e2f.png"
+          alt=""
+        />
+        <SearchBar />
+        <div className={styles.notFound}>
+          <h4>No se encontraron pokemones</h4>
+        </div>
+      </div>
+    );
+  }
 }

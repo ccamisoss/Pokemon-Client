@@ -3,4 +3,6 @@
     flex-direction: row;
     justify-content: center;
     list-style: none;
+    margin-bottom: 0px;
+    margin-top: 10px;
 }   

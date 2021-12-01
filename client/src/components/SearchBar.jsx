@@ -8,8 +8,9 @@ import {
   orderByName,
   orderByAttack,
 } from "../actions/index";
+import styles from "../styles/SearchBar.module.css"
 
-export function SearchBar({ functionSet }) {
+export function SearchBar() {
   const [pokeName, setPokeName] = useState("")
   const [orden, setOrden] = useState("")
   const dispatch = useDispatch();
@@ -26,14 +27,12 @@ export function SearchBar({ functionSet }) {
   const handleSortByName = (e) => {
     e.preventDefault();
     dispatch(orderByName(e.target.value));
-    functionSet();
     setOrden("Ordenado "+ e.target.value)
   };
 
  const handleSortByAttack = (e) => {
     e.preventDefault();
     dispatch(orderByAttack(e.target.value));
-    functionSet();
     setOrden("Ordenado "+ e.target.value)
   };
 
@@ -48,10 +47,12 @@ export function SearchBar({ functionSet }) {
   };
 
   return (
-    <div>
+    <div className={styles.div}>
       <div>
-        <input type="text" placeholder="Search..." value={pokeName} onChange={handleChange} />
-        <button onClick={(e) => handleSearchByName(e)}>Buscar Pokemon</button>
+        <form onSubmit={(e) => handleSearchByName(e)}>
+          <input type="text" placeholder="Search..." value={pokeName} onChange={handleChange} />
+          <button>Buscar Pokemon</button>
+        </form>
       </div>
       <select onChange={(e) => handleSortByName(e)}>
         <option value="asc">Nombre ascendente</option>
