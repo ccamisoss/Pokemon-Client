@@ -12,7 +12,6 @@ import styles from "../styles/SearchBar.module.css"
 
 export function SearchBar() {
   const [pokeName, setPokeName] = useState("")
-  const [orden, setOrden] = useState("")
   const dispatch = useDispatch();
   const tipos = useSelector((state) => state.tipos);
 
@@ -27,13 +26,11 @@ export function SearchBar() {
   const handleSortByName = (e) => {
     e.preventDefault();
     dispatch(orderByName(e.target.value));
-    setOrden("Ordenado "+ e.target.value)
   };
 
  const handleSortByAttack = (e) => {
     e.preventDefault();
     dispatch(orderByAttack(e.target.value));
-    setOrden("Ordenado "+ e.target.value)
   };
 
   const handleChange = (e) => {

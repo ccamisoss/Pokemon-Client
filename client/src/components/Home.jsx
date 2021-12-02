@@ -22,13 +22,16 @@ export function Home() {
   const [pokemonsPerPage, setPokemonsPerPage] = useState(12);
   const indexOfLastPokemon = currentPage * pokemonsPerPage;
   const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
-  const currentPokemons = pokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
+  const currentPokemons = pokemons.slice(
+    indexOfFirstPokemon,
+    indexOfLastPokemon
+  );
   const paginado = (pageNumber) => setCurrentPage(pageNumber);
   console.log(currentPokemons);
 
   if (
-    currentPokemons.length > 0 &&
-    currentPokemons[0] !== "No se encontró el pokemon solicitado"
+    currentPokemons.length < 1 ||
+    currentPokemons[0] === "No se encontró el pokemon solicitado"
   ) {
     return (
       <div className={styles.contenedor}>
@@ -39,11 +42,8 @@ export function Home() {
           alt=""
         />
         <SearchBar />
-        <Paginado pokemonsPerPage={pokemonsPerPage} pokemons={pokemons.length} paginado={paginado}/>
-        <div className={styles.pokeContainer}>
-          {currentPokemons?.map((p) => (
-            <Pokemon name={p.name} image={p.image} types={p.types} id={p.id} key={p.id}/>
-          ))}
+        <div className={styles.notFound}>
+          <h4>No se encontraron pokemones</h4>
         </div>
       </div>
     );
@@ -57,8 +57,21 @@ export function Home() {
           alt=""
         />
         <SearchBar />
-        <div className={styles.notFound}>
-          <h4>No se encontraron pokemones</h4>
+        <Paginado
+          pokemonsPerPage={pokemonsPerPage}
+          pokemons={pokemons.length}
+          paginado={paginado}
+        />
+        <div className={styles.pokeContainer}>
+          {currentPokemons?.map((p) => (
+            <Pokemon
+              name={p.name}
+              image={p.image}
+              types={p.types}
+              id={p.id}
+              key={p.id}
+            />
+          ))}
         </div>
       </div>
     );

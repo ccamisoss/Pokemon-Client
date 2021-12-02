@@ -27,13 +27,13 @@ module.exports = {
           );
         } else {
           res.json({
-              id: db.id,
-              name: db.name.charAt(0).toUpperCase() + db.name.slice(1),
-              image: db.image,
-              types: db.tipos.map(
-                (t) => t.name.charAt(0).toUpperCase() + t.name.slice(1)
-              ),
-            });
+            id: db.id,
+            name: db.name.charAt(0).toUpperCase() + db.name.slice(1),
+            image: db.image,
+            types: db.tipos.map(
+              (t) => t.name.charAt(0).toUpperCase() + t.name.slice(1)
+            ),
+          });
         }
       } else {
         let db = await Pokemon.findAll({ include: Tipo });
@@ -48,31 +48,33 @@ module.exports = {
             ),
           };
         });
-        axios.get("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=40").then((r) => {
-          Promise.all(
-            r.data.results.map(async (p) => {
-              let pokeInfo = await axios.get(p.url);
-              return {
-                name: p.name,
-                info: pokeInfo.data,
-              };
-            })
-          ).then((array) => {
-            let result = array.map((poke) => {
-              return {
-                id: poke.info.id,
-                name: poke.name.charAt(0).toUpperCase() + poke.name.slice(1),
-                image: poke.info.sprites.front_default,
-                createdInDB: false,
-                types: poke.info.types.map(
-                  (t) =>
-                    t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)
-                ),
-              };
+        axios
+          .get("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=40")
+          .then((r) => {
+            Promise.all(
+              r.data.results.map(async (p) => {
+                let pokeInfo = await axios.get(p.url);
+                return {
+                  name: p.name,
+                  info: pokeInfo.data,
+                };
+              })
+            ).then((array) => {
+              let result = array.map((poke) => {
+                return {
+                  id: poke.info.id,
+                  name: poke.name.charAt(0).toUpperCase() + poke.name.slice(1),
+                  image: poke.info.sprites.front_default,
+                  createdInDB: false,
+                  types: poke.info.types.map(
+                    (t) =>
+                      t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)
+                  ),
+                };
+              });
+              res.json(formatted.concat(result));
             });
-            res.json(formatted.concat(result));
           });
-        });
       }
     } catch (error) {
       next(error);
@@ -138,6 +140,88 @@ module.exports = {
         });
         res.json(r);
       });
+    } catch (error) {
+      next(error);
+    }
+  },
+  getOrdered: async (req, res, next) => {
+    try {
+      let by = req.params.by;
+      let order = req.params.order;
+      let db = await Pokemon.findAll({ include: Tipo });
+      let formatted = db.map((p) => {
+        return {
+          id: p.id,
+          attack: p.attack,
+          name: p.name.charAt(0).toUpperCase() + p.name.slice(1),
+          image: p.image,
+          createdInDB: true,
+          types: p.tipos.map(
+            (t) => t.name.charAt(0).toUpperCase() + t.name.slice(1)
+          ),
+        };
+      });
+      axios
+        .get("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=40")
+        .then((r) => {
+          Promise.all(
+            r.data.results.map(async (p) => {
+              let pokeInfo = await axios.get(p.url);
+              return {
+                name: p.name,
+                info: pokeInfo.data,
+              };
+            })
+          ).then((array) => {
+            let result = array.map((poke) => {
+              return {
+                id: poke.info.id,
+                attack: poke.info.stats[1].base_stat,
+                name: poke.name.charAt(0).toUpperCase() + poke.name.slice(1),
+                image: poke.info.sprites.front_default,
+                createdInDB: false,
+                types: poke.info.types.map(
+                  (t) =>
+                    t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)
+                ),
+              };
+            });
+            const allPokes = formatted.concat(result);
+            if (by === "name") {
+              if (order === "asc") {
+                allPokes.sort((a, b) => {
+                  if (a.name > b.name) return 1;
+                  if (b.name > a.name) return -1;
+                  return 0;
+                });
+                res.json(allPokes);
+              } else {
+                allPokes.sort((a, b) => {
+                  if (a.name > b.name) return -1;
+                  if (b.name > a.name) return 1;
+                  return 0;
+                });
+                res.json(allPokes);
+              }
+            }else{
+              if (order === "asc") {
+                allPokes.sort((a, b) => {
+                  if (a.attack > b.attack) return 1;
+                  if (b.attack > a.attack) return -1;
+                  return 0;
+                });
+                res.json(allPokes);
+              } else {
+                allPokes.sort((a, b) => {
+                  if (a.attack > b.attack) return -1;
+                  if (b.attack > a.attack) return 1;
+                  return 0;
+                });
+                res.json(allPokes);
+              }
+            }
+          });
+        });
     } catch (error) {
       next(error);
     }

@@ -6,7 +6,7 @@ import {
   FILTER_BY_TYPE,
   FILTER_BY_ORIGIN,
   ORDER_BY_NAME,
-  ORDER_BY_ATTACK
+  ORDER_BY_ATTACK,
 } from "../actions";
 
 const initialState = {
@@ -62,37 +62,15 @@ export default function rootReducer(state = initialState, action) {
         tipos: action.payload,
       };
     case ORDER_BY_NAME:
-      let sortedArr= action.payload === "asc"? 
-      state.pokemons.sort((a,b) => {
-        if(a.name > b.name) return 1;
-        if(b.name > a.name) return -1;
-        return 0;
-      }) :
-      state.pokemons.sort((a,b) => {
-        if(a.name > b.name) return -1;
-        if(b.name > a.name) return 1;
-        return 0;
-      });
-      return{
+      return {
         ...state,
-        pokemons: sortedArr
-      }
-      case ORDER_BY_ATTACK:
-      let sortedArr2= action.payload === "asc"? 
-      state.pokemons.sort((a,b) => {
-        if(a.attack > b.attack) return 1;
-        if(b.attack > a.attack) return -1;
-        return 0;
-      }) :
-      state.pokemons.sort((a,b) => {
-        if(a.attack > b.attack) return -1;
-        if(b.attack > a.attack) return 1;
-        return 0;
-      });
-      return{
+        pokemons: action.payload,
+      };
+    case ORDER_BY_ATTACK:
+      return {
         ...state,
-        pokemons: sortedArr2
-      }
+        pokemons: action.payload,
+      };
     default:
       return state;
   }

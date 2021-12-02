@@ -1,8 +1,9 @@
 import { NavBar } from "./NavBar";
 import styles from "../styles/PokemonCreate.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPoke } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
+import { getTypes } from "../actions/index"
 
 export function PokemonCreate() {
   const dispatch = useDispatch();
@@ -17,6 +18,10 @@ export function PokemonCreate() {
     speed: "",
     type: []
   });
+
+  useEffect(() => {
+    dispatch(getTypes())
+  }, [dispatch])
 
   const handleChange = (e) => {
     setPokemon({
