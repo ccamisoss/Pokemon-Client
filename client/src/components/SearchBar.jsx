@@ -41,8 +41,7 @@ export function SearchBar() {
     e.preventDefault();
     dispatch(getByName(pokeName));
     setPokeName("")
-  };
-
+  }; 
   return (
     <div className={styles.div}>
       <div>

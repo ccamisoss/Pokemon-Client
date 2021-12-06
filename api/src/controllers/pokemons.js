@@ -203,7 +203,7 @@ module.exports = {
                 });
                 res.json(allPokes);
               }
-            }else{
+            } else {
               if (order === "asc") {
                 allPokes.sort((a, b) => {
                   if (a.attack > b.attack) return 1;
