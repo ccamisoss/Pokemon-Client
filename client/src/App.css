@@ -17,10 +17,11 @@ div, button, option, select, input{
     font-size: xx-small;
 }
 
-input, button{
+select, input,button{
+    padding: 5px;
     border-radius: 5px;
 }
 
-select, input,button{
-    padding: 5px;
+form{
+    margin-bottom: 5px;
 }
