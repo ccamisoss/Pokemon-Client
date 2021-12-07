@@ -35,13 +35,14 @@ export function SearchBar() {
 
   const handleChange = (e) => {
     setPokeName(e.target.value)
-  }
+  };
 
   const handleSearchByName = (e) => {
     e.preventDefault();
     dispatch(getByName(pokeName));
     setPokeName("")
   }; 
+
   return (
     <div className={styles.div}>
       <div>

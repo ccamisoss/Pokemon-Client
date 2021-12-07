@@ -4,16 +4,26 @@ const { Pokemon, Tipo } = require("../db");
 module.exports = {
   getAll: async (req, res, next) => {
     try {
-      let name = req.query.name;
+      var { name } = req.query;
       if (name) {
-        let db = await Pokemon.findOne({
+        let pokemon = await Pokemon.findOne({
           where: { name: name.toLowerCase() },
           include: Tipo,
         });
-        if (!db) {
+        if (pokemon) {
+          let formatted = {
+            id: pokemon.id,
+            name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
+            image: pokemon.image,
+            types: pokemon.tipos.map(
+              (t) => t.name.charAt(0).toUpperCase() + t.name.slice(1)
+            ),
+          };
+          res.json(formatted);
+        } else {
           axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then(
             (r) => {
-              res.json({
+              let formatted = {
                 id: r.data.id,
                 name: name.charAt(0).toUpperCase() + name.slice(1),
                 image: r.data.sprites.front_default,
@@ -21,19 +31,11 @@ module.exports = {
                   (t) =>
                     t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)
                 ),
-              });
+              };
+              res.json(formatted);
             },
             () => res.send("No se encontró el pokemon solicitado")
           );
-        } else {
-          res.json({
-            id: db.id,
-            name: db.name.charAt(0).toUpperCase() + db.name.slice(1),
-            image: db.image,
-            types: db.tipos.map(
-              (t) => t.name.charAt(0).toUpperCase() + t.name.slice(1)
-            ),
-          });
         }
       } else {
         let db = await Pokemon.findAll({ include: Tipo });
@@ -66,10 +68,7 @@ module.exports = {
                   name: poke.name.charAt(0).toUpperCase() + poke.name.slice(1),
                   image: poke.info.sprites.front_default,
                   createdInDB: false,
-                  types: poke.info.types.map(
-                    (t) =>
-                      t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)
-                  ),
+                  types: poke.info.types.map(t => t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1))
                 };
               });
               res.json(formatted.concat(result));
@@ -81,12 +80,12 @@ module.exports = {
     }
   },
   getById: (req, res, next) => {
-    let id = req.params.id;
-    axios
-      .get("https://pokeapi.co/api/v2/pokemon/" + id)
+    try{
+      let id = req.params.id;
+      axios.get("https://pokeapi.co/api/v2/pokemon/" + id)
       .then(
-        (r) =>
-          res.json({
+        r => {
+          let formatted = {
             id: id,
             name: r.data.name.charAt(0).toUpperCase() + r.data.name.slice(1),
             hp: r.data.stats[0].base_stat,
@@ -96,29 +95,30 @@ module.exports = {
             height: r.data.height,
             weight: r.data.weight,
             image: r.data.sprites.front_default,
-            types: r.data.types.map(
-              (t) => t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)
-            ),
-          }),
+            types: r.data.types.map(t => t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1))
+          }
+          res.json(formatted)
+        },
         async () => {
-          let poke = await Pokemon.findByPk(id, { include: Tipo });
-          res.json({
-            id: poke.id,
-            name: poke.name.charAt(0).toUpperCase() + poke.name.slice(1),
-            hp: poke.hp,
-            attack: poke.attack,
-            defense: poke.defense,
-            speed: poke.speed,
-            height: poke.height,
-            weight: poke.weight,
-            image: poke.image,
-            types: poke.tipos.map(
-              (t) => t.name.charAt(0).toUpperCase() + t.name.slice(1)
-            ),
-          });
+          Pokemon.findByPk(id, { include: Tipo })
+          .then((poke) => {
+            let formatted = {
+              id: poke.id,
+              name: poke.name.charAt(0).toUpperCase() + poke.name.slice(1),
+              hp: poke.hp,
+              attack: poke.attack,
+              defense: poke.defense,
+              speed: poke.speed,
+              height: poke.height,
+              weight: poke.weight,
+              image: poke.image,
+              types: poke.tipos.map(t => t.name.charAt(0).toUpperCase() + t.name.slice(1))
+            }
+            res.json(formatted);
+          }, () => res.json(undefined))
         }
       )
-      .catch(next);
+    } catch(error) { next(error) };
   },
   createPoke: async (req, res, next) => {
     try {
@@ -130,7 +130,7 @@ module.exports = {
       };
       Pokemon.create(pokemon).then(async (p) => {
         // agrego los tipos
-        tipos.map(async (t) => {
+        tipos.map(async t => {
           let type = await Tipo.findAll({ where: { name: t } });
           if (type.length > 0) await p.addTipo(type);
         });
@@ -146,8 +146,7 @@ module.exports = {
   },
   getOrdered: async (req, res, next) => {
     try {
-      let by = req.params.by;
-      let order = req.params.order;
+      let { by, order } = req.params
       let db = await Pokemon.findAll({ include: Tipo });
       let formatted = db.map((p) => {
         return {
@@ -156,13 +155,10 @@ module.exports = {
           name: p.name.charAt(0).toUpperCase() + p.name.slice(1),
           image: p.image,
           createdInDB: true,
-          types: p.tipos.map(
-            (t) => t.name.charAt(0).toUpperCase() + t.name.slice(1)
-          ),
+          types: p.tipos.map(t => t.name.charAt(0).toUpperCase() + t.name.slice(1))
         };
       });
-      axios
-        .get("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=40")
+      axios.get("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=40")
         .then((r) => {
           Promise.all(
             r.data.results.map(async (p) => {
@@ -180,48 +176,45 @@ module.exports = {
                 name: poke.name.charAt(0).toUpperCase() + poke.name.slice(1),
                 image: poke.info.sprites.front_default,
                 createdInDB: false,
-                types: poke.info.types.map(
-                  (t) =>
-                    t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)
-                ),
+                types: poke.info.types.map(t => t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1))
               };
-            });
+            });      
             const allPokes = formatted.concat(result);
-            if (by === "name") {
-              if (order === "asc") {
-                allPokes.sort((a, b) => {
-                  if (a.name > b.name) return 1;
-                  if (b.name > a.name) return -1;
-                  return 0;
-                });
-                res.json(allPokes);
-              } else {
-                allPokes.sort((a, b) => {
-                  if (a.name > b.name) return -1;
-                  if (b.name > a.name) return 1;
-                  return 0;
-                });
-                res.json(allPokes);
-              }
+          if (by === "name") {
+            if (order === "asc") {
+              allPokes.sort((a, b) => {
+                if (a.name > b.name) return 1;
+                if (b.name > a.name) return -1;
+                return 0;
+              });
+              res.json(allPokes);
             } else {
-              if (order === "asc") {
-                allPokes.sort((a, b) => {
-                  if (a.attack > b.attack) return 1;
-                  if (b.attack > a.attack) return -1;
-                  return 0;
-                });
-                res.json(allPokes);
-              } else {
-                allPokes.sort((a, b) => {
-                  if (a.attack > b.attack) return -1;
-                  if (b.attack > a.attack) return 1;
-                  return 0;
-                });
-                res.json(allPokes);
-              }
+              allPokes.sort((a, b) => {
+                if (a.name > b.name) return -1;
+                if (b.name > a.name) return 1;
+                return 0;
+              });
+              res.json(allPokes);
             }
-          });
+          } else {
+            if (order === "asc") {
+              allPokes.sort((a, b) => {
+                if (a.attack > b.attack) return 1;
+                if (b.attack > a.attack) return -1;
+                return 0;
+              });
+              res.json(allPokes);
+            } else {
+              allPokes.sort((a, b) => {
+                if (a.attack > b.attack) return -1;
+                if (b.attack > a.attack) return 1;
+                return 0;
+              });
+              res.json(allPokes);
+            }
+          }
         });
+      });
     } catch (error) {
       next(error);
     }

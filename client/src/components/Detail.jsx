@@ -13,30 +13,41 @@ export function Detail(props) {
     dispatch(getPokeById(id));
   });
 
-  return (
-    <>
-      <NavBar />
-      <div className={styles.pokeContenedor}>
-        <h2 className={styles.h2}>{poke.name}</h2>
-        <img className={styles.img} src={poke.image} alt="" />
-        <div className={styles.infoContainer}>
-          <ul className={styles.ul}>
-            <li>Id: {poke.id}</li>
-            <li>Vida: {poke.hp}</li>
-            <li>Ataque: {poke.attack}</li>
-            <li>Defensa: {poke.defense}</li>
-            <li>Velocidad: {poke.speed}</li>
-            <li>Altura: {poke.height}</li>
-            <li>Peso: {poke.weight}</li>
-          </ul>
-          <div className={styles.types}>
-            <span className={styles.span}>Tipo: </span>
-            {poke.types?.map((t) => (
-              <span className={styles.span}> {t}. </span>
-            ))}
+  if(!poke){
+    return(
+      <>
+        <NavBar/>
+        <div className={styles.notFound}>
+          <h4>No se encontraron pokemones</h4>
+        </div>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <NavBar />
+        <div className={styles.pokeContenedor}>
+          <h2 className={styles.h2}>{poke.name}</h2>
+          <img className={styles.img} src={poke.image} alt="" />
+          <div className={styles.infoContainer}>
+            <ul className={styles.ul}>
+              <li>Id: {poke.id}</li>
+              <li>Vida: {poke.hp}</li>
+              <li>Ataque: {poke.attack}</li>
+              <li>Defensa: {poke.defense}</li>
+              <li>Velocidad: {poke.speed}</li>
+              <li>Altura: {poke.height}</li>
+              <li>Peso: {poke.weight}</li>
+            </ul>
+            <div className={styles.types}>
+              <span className={styles.span}>Tipo: </span>
+              {poke.types?.map((t) => (
+                <span className={styles.span}> {t}. </span>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
 }

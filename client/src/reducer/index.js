@@ -32,7 +32,7 @@ export default function rootReducer(state = initialState, action) {
     case GET_BY_ID:
       return {
         ...state,
-        detalle: action.payload,
+        detalle: action.payload
       };
     case FILTER_BY_TYPE:
       let filteredPokes =
