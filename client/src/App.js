@@ -4,6 +4,7 @@ import { LandingPage } from "./components/LandingPage";
 import { Home } from "./components/Home";
 import { Detail } from "./components/Detail";
 import { PokemonCreate } from "./components/PokemonCreate";
+import { Success } from "./components/Success";
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
       <Route exact path="/" component={LandingPage} />
       <Route path="/home" component={Home} />
       <Route path="/pokemon/:id" component={Detail} />
-      <Route path="/create" component={PokemonCreate} />
+      <Route exact path="/create" component={PokemonCreate} />
+      <Route path="/create/success" component={Success}/>
     </div>
   );
 }

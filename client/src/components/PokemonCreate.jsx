@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createPoke } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { getTypes } from "../actions/index"
+import { Link } from "react-router-dom";
 
 export function PokemonCreate() {
   const dispatch = useDispatch();
@@ -91,7 +92,9 @@ export function PokemonCreate() {
             </label>
           ))}
         </div>
-        <button >Crear Pokemon</button>
+        <Link to="/create/success">
+          <button >Crear Pokemon</button> 
+        </Link>
       </form>
     </div>
   );
