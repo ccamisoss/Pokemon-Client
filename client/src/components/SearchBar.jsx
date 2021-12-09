@@ -39,7 +39,7 @@ export function SearchBar() {
 
   const handleSearchByName = (e) => {
     e.preventDefault();
-    dispatch(getByName(pokeName));
+    dispatch(getByName(pokeName.toLowerCase()));
     setPokeName("")
   }; 
 

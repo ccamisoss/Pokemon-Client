@@ -71,7 +71,7 @@ module.exports = {
                   types: poke.info.types.map(t => t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1))
                 };
               });
-              res.json(formatted.concat(result));
+              res.status(200).json(formatted.concat(result));
             });
           });
       }
