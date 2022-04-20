@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { createPoke } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { getTypes } from "../actions/index"
-import { Link } from "react-router-dom";
 
 export function PokemonCreate() {
   const dispatch = useDispatch();
@@ -25,10 +24,10 @@ export function PokemonCreate() {
   }, [dispatch])
 
   const handleChange = (e) => {
-    setPokemon({
-      ...p,
-      [e.target.name]: e.target.value,
-    });
+      setPokemon({
+        ...p,
+        [e.target.name]: e.target.value,
+      });
   };
 
   const handleSubmit = (e) => {
@@ -92,9 +91,7 @@ export function PokemonCreate() {
             </label>
           ))}
         </div>
-        <Link to="/create/success">
           <button >Crear Pokemon</button> 
-        </Link>
       </form>
     </div>
   );
