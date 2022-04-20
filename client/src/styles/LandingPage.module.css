@@ -1,19 +1,21 @@
-.contenedor{
-  height: 529px;
+.contenedor {
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.pic{
-    height: 200px;
+.pic {
+  height: 35vh;
 }
 
-.button{
-  height: 30px;
-    border-radius: 10px;
-    /* border: 1mm solid rgb(49, 49, 243);
-    background-color: rgb(255, 196, 0); */
-    margin: 3px;
+.button {
+  height: 5vh;
+  border-radius: 10px;
+  margin: 3px;
+}
+
+.button:hover {
+  cursor: pointer;
 }
