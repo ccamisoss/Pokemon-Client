@@ -1,12 +1,11 @@
-const { Tipo } = require('../db')
+const { Tipo } = require("../db");
 
-module.exports={
-    getAll: async (req,res,next) => {
-        try{
-            Tipo.findAll().then(r => res.json(r))            
-        } catch (error) {
-            next(error)
-        }
-        
+module.exports = {
+  getAll: async (req, res, next) => {
+    try {
+      Tipo.findAll().then((r) => res.json(r));
+    } catch (error) {
+      next(error);
     }
-}
+  },
+};
