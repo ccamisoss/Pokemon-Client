@@ -1,28 +1,35 @@
-@font-face{
-    font-family: PressStart2p;
-    src: url(./styles/fonts/PressStart2P.ttf);
+@font-face {
+  font-family: PressStart2p;
+  src: url(./styles/fonts/PressStart2P.ttf);
 }
 
 body {
-    text-align: center;
-    background: url(../src/styles/images/3952024.png) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    height: 100vh;
+  text-align: center;
+  background: url(../src/styles/images/3952024.png) no-repeat center center
+    fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100vh;
 }
 
-div, button, option, select, input{
-    font-family: PressStart2p;
-    font-size: xx-small;
+div,
+button,
+option,
+select,
+input {
+  font-family: PressStart2p;
+  font-size: xx-small;
 }
 
-select, input,button{
-    padding: 5px;
-    border-radius: 5px;
+select,
+input,
+button {
+  padding: 5px;
+  border-radius: 5px;
 }
 
-form{
-    margin-bottom: 5px;
+form {
+  margin-bottom: 5px;
 }

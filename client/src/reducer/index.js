@@ -7,7 +7,7 @@ import {
   FILTER_BY_ORIGIN,
   ORDER_BY_NAME,
   ORDER_BY_ATTACK,
-} from "../actions";
+} from "../actions/constants";
 
 const initialState = {
   pokemons: [],
@@ -32,7 +32,7 @@ export default function rootReducer(state = initialState, action) {
     case GET_BY_ID:
       return {
         ...state,
-        detalle: action.payload
+        detalle: action.payload,
       };
     case FILTER_BY_TYPE:
       let filteredPokes =
