@@ -43,7 +43,7 @@ export function Home() {
         />
         <SearchBar />
         <div className={styles.notFound}>
-          <h4>No se encontraron pokemones</h4>
+          <h4 className={styles.h4}>No se encontraron pokemones</h4>
         </div>
       </div>
     );
