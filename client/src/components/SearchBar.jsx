@@ -8,10 +8,10 @@ import {
   orderByName,
   orderByAttack,
 } from "../actions/index";
-import styles from "../styles/SearchBar.module.css"
+import styles from "../styles/SearchBar.module.css";
 
 export function SearchBar() {
-  const [pokeName, setPokeName] = useState("")
+  const [pokeName, setPokeName] = useState("");
   const dispatch = useDispatch();
   const tipos = useSelector((state) => state.tipos);
 
@@ -28,38 +28,44 @@ export function SearchBar() {
     dispatch(orderByName(e.target.value));
   };
 
- const handleSortByAttack = (e) => {
+  const handleSortByAttack = (e) => {
     e.preventDefault();
     dispatch(orderByAttack(e.target.value));
   };
 
   const handleChange = (e) => {
-    setPokeName(e.target.value)
+    setPokeName(e.target.value);
   };
 
   const handleSearchByName = (e) => {
     e.preventDefault();
     dispatch(getByName(pokeName.toLowerCase()));
-    setPokeName("")
-  }; 
+    setPokeName("");
+  };
 
   return (
     <div className={styles.div}>
       <div>
         <form onSubmit={(e) => handleSearchByName(e)}>
-          <input type="text" placeholder="Search..." value={pokeName} onChange={handleChange} />
+          <input
+            type="text"
+            placeholder="Search..."
+            value={pokeName}
+            onChange={handleChange}
+            required={true}
+          />
           <button>Buscar Pokemon</button>
         </form>
       </div>
-      <select onChange={(e) => handleSortByName(e)}>
+      <select className={styles.option} onChange={(e) => handleSortByName(e)}>
         <option value="asc">Nombre ascendente</option>
         <option value="desc">Nombre descendente</option>
       </select>
-      <select onChange={(e) => handleSortByAttack(e)}>
+      <select className={styles.option} onChange={(e) => handleSortByAttack(e)}>
         <option value="asc">Fuerza ascendente</option>
         <option value="desc">Fuerza descendente</option>
       </select>
-      <select onChange={(e) => handleFilterByType(e)}>
+      <select className={styles.option} onChange={(e) => handleFilterByType(e)}>
         {tipos?.map((t) => {
           let nombre = t.name?.charAt(0).toUpperCase() + t.name?.slice(1);
           return (
@@ -69,11 +75,11 @@ export function SearchBar() {
           );
         })}
       </select>
-      <select onChange={(e) => handleFilterByOrigin(e)}>
+      <select className={styles.option} onChange={(e) => handleFilterByOrigin(e)}>
         <option value="db">Creados</option>
         <option value="api">Pokeapi</option>
       </select>
-      <button onClick={() => dispatch(filterPokemonsByType("all"))}>
+      <button className={styles.option} onClick={() => dispatch(filterPokemonsByType("all"))}>
         Resetear búsqueda
       </button>
     </div>

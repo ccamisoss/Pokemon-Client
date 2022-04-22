@@ -11,20 +11,20 @@ export function Detail(props) {
   useEffect(() => {
     let id = props.match.params.id;
     dispatch(getPokeById(id));
-  });
+  },[dispatch, props.match.params.id]);
 
-  if(!poke){
-    return(
+  if (!poke) {
+    return (
       <>
-        <NavBar/>
+        <NavBar />
         <div className={styles.notFound}>
           <h4>No se encontraron pokemones</h4>
         </div>
       </>
-    )
+    );
   } else {
     return (
-      <>
+      <div className={styles.contenedor}>
         <NavBar />
         <div className={styles.pokeContenedor}>
           <h2 className={styles.h2}>{poke.name}</h2>
@@ -47,7 +47,7 @@ export function Detail(props) {
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }
