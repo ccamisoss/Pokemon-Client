@@ -5,4 +5,9 @@
     list-style: none;
     margin-bottom: 0px;
     margin-top: 10px;
+   
 }   
+
+.li{
+    margin-inline: 1px;
+}

@@ -3,6 +3,10 @@
   src: url(./styles/fonts/PressStart2P.ttf);
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   text-align: center;
   background: url(../src/styles/images/3952024.png) no-repeat center center
@@ -20,14 +24,21 @@ option,
 select,
 input {
   font-family: PressStart2p;
-  font-size: xx-small;
+  font-size: x-small;
 }
 
 select,
 input,
 button {
-  padding: 5px;
-  border-radius: 5px;
+  font-size: 11px;
+  padding: 1.3vh;
+  border-radius: 9px;
+}
+
+select,
+input,
+button:hover {
+  cursor: pointer;
 }
 
 form {

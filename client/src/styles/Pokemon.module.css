@@ -4,7 +4,8 @@
 }
 
 .contenedor{
-    width: 180px;
+    width: 90%;
+    height: 90%;
     background-color: white;
     align-items: center;
     border:1mm outset rgb(224, 224, 224);

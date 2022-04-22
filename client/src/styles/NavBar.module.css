@@ -1,14 +1,11 @@
-.header{
-    padding: 5px;
-    display: flex;
-    flex-direction: row-reverse;
+.header {
+  padding: 5px;
+  display: flex;
+  flex-direction: row-reverse;
 }
 
-.button{
-    height: 25px;
-    border-radius: 10px;
-    /* border: 1mm solid #3461AE; */
-    /* background-color: #FFCC01; */
-    margin: 3px; 
-    /* font-weight: bold; */
+.button {
+  height: 5.4vh;
+  border-radius: 10px;
+  margin: 3px;
 }
