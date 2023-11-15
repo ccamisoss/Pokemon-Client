@@ -65,8 +65,8 @@ export function Home() {
           {currentPokemons?.map((p) => (
             <Pokemon
               name={p.name}
-              image={p.image}
-              types={p.types}
+              image={p.img}
+              types={p.type}
               id={p.id}
               key={p.id}
             />
