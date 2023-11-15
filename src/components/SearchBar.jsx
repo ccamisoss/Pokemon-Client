@@ -66,10 +66,10 @@ export function SearchBar() {
         <option value="desc">Fuerza descendente</option>
       </select>
       <select className={styles.option} onChange={(e) => handleFilterByType(e)}>
-        {tipos?.map((t) => {
+        {tipos?.map((t, index) => {
           let nombre = t.name?.charAt(0).toUpperCase() + t.name?.slice(1);
           return (
-            <option value={t.name} key={t.id}>
+            <option value={t.name} key={index}>
               {nombre}
             </option>
           );

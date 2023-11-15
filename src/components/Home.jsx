@@ -27,7 +27,6 @@ export function Home() {
     indexOfLastPokemon
   );
   const paginado = (pageNumber) => setCurrentPage(pageNumber);
-  console.log(currentPokemons);
 
   if (
     currentPokemons.length < 1 ||
