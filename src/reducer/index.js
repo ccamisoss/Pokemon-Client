@@ -27,7 +27,7 @@ export default function rootReducer(state = initialState, action) {
     case GET_BY_NAME:
       return {
         ...state,
-        pokemons: [action.payload],
+        pokemons: action.payload,
       };
     case GET_BY_ID:
       return {
@@ -38,11 +38,7 @@ export default function rootReducer(state = initialState, action) {
       let filteredPokes =
         action.payload === "all"
           ? state.allPokemons
-          : state.allPokemons.filter((p) =>
-              p.types.includes(
-                action.payload.charAt(0).toUpperCase() + action.payload.slice(1)
-              )
-            );
+          : state.allPokemons.filter((p) => p.type.includes(action.payload));
       return {
         ...state,
         pokemons: filteredPokes,
