@@ -62,7 +62,7 @@ export const filterPokemonsByOrigin = (payload) => {
 
 export const orderByName = (payload) => {
   return async function (dispatch) {
-    let data = await axios.get("http://localhost:3001/ordered/name/" + payload);
+    let data = await axios.get("http://localhost:3001/sorted/name/" + payload);
     return dispatch({
       type: "ORDER_BY_NAME",
       payload: data.data,
@@ -73,7 +73,7 @@ export const orderByName = (payload) => {
 export const orderByAttack = (payload) => {
   return async function (dispatch) {
     let data = await axios.get(
-      "http://localhost:3001/ordered/attack/" + payload
+      "http://localhost:3001/sorted/fuerza/" + payload
     );
     return dispatch({
       type: "ORDER_BY_ATTACK",
