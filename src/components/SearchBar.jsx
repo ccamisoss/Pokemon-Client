@@ -25,11 +25,13 @@ export function SearchBar() {
 
   const handleSortByName = (e) => {
     e.preventDefault();
+    if (e.target.value === '-') return;
     dispatch(orderByName(e.target.value));
   };
 
   const handleSortByAttack = (e) => {
     e.preventDefault();
+    if (e.target.value === '-') return;
     dispatch(orderByAttack(e.target.value));
   };
 
@@ -57,15 +59,18 @@ export function SearchBar() {
           <button>Buscar Pokemon</button>
         </form>
       </div>
-      <select className={styles.option} onChange={(e) => handleSortByName(e)}>
-        <option value="asc">Nombre ascendente</option>
-        <option value="desc">Nombre descendente</option>
+      <select className={styles.option} defaultValue={"-"} onChange={(e) => handleSortByName(e)}>
+        <option value="-" disabled>Ordenar por nombre</option>
+        <option value="asc">Ascendente</option>
+        <option value="desc">Descendente</option>
       </select>
-      <select className={styles.option} onChange={(e) => handleSortByAttack(e)}>
-        <option value="asc">Fuerza ascendente</option>
-        <option value="desc">Fuerza descendente</option>
+      <select className={styles.option} defaultValue={"-"} onChange={(e) => handleSortByAttack(e)}>
+        <option value="-" disabled>Ordenar por fuerza</option>
+        <option value="asc">Ascendente</option>
+        <option value="desc">Descendente</option>
       </select>
-      <select className={styles.option} onChange={(e) => handleFilterByType(e)}>
+      <select className={styles.option} defaultValue={"-"} onChange={(e) => handleFilterByType(e)}>
+        <option value="-" disabled>Tipo</option>
         {tipos?.map((t, index) => {
           let nombre = t.name?.charAt(0).toUpperCase() + t.name?.slice(1);
           return (
@@ -75,7 +80,8 @@ export function SearchBar() {
           );
         })}
       </select>
-      <select className={styles.option} onChange={(e) => handleFilterByOrigin(e)}>
+      <select className={styles.option} defaultValue={"-"} onChange={(e) => handleFilterByOrigin(e)}>
+        <option value="-">Origen</option>
         <option value="db">Creados</option>
         <option value="api">Pokeapi</option>
       </select>
