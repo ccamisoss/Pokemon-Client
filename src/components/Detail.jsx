@@ -3,22 +3,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { getPokeById } from "../actions";
 import { NavBar } from "./NavBar";
 import styles from "../styles/Detail.module.css";
+import { useParams } from "react-router-dom";
+import { capitalizeFirstLetter } from "../utils";
 
 export function Detail(props) {
   const dispatch = useDispatch();
   const poke = useSelector((state) => state.detalle);
+  let { id } = useParams();
 
   useEffect(() => {
-    let id = props.match.params.id;
     dispatch(getPokeById(id));
-  },[dispatch, props.match.params.id]);
+  }, [dispatch, id]);
 
-  if (!poke) {
+  if (JSON.stringify(poke) === "{}") {
     return (
       <>
         <NavBar />
         <div className={styles.notFound}>
-          <h4>No se encontraron pokemones</h4>
+          <h4>No se encontró el pokemon</h4>
         </div>
       </>
     );
@@ -27,22 +29,25 @@ export function Detail(props) {
       <div className={styles.contenedor}>
         <NavBar />
         <div className={styles.pokeContenedor}>
-          <h2 className={styles.h2}>{poke.name}</h2>
-          <img className={styles.img} src={poke.image} alt="" />
+          <h2 className={styles.h2}>{capitalizeFirstLetter(poke.name)}</h2>
+          <img className={styles.img} src={poke.img} alt="" />
           <div className={styles.infoContainer}>
             <ul className={styles.ul}>
               <li>Id: {poke.id}</li>
-              <li>Vida: {poke.hp}</li>
-              <li>Ataque: {poke.attack}</li>
-              <li>Defensa: {poke.defense}</li>
-              <li>Velocidad: {poke.speed}</li>
+              <li>Vida: {poke.vida}</li>
+              <li>Ataque: {poke.fuerza}</li>
+              <li>Defensa: {poke.defensa}</li>
+              <li>Velocidad: {poke.velocidad}</li>
               <li>Altura: {poke.height}</li>
               <li>Peso: {poke.weight}</li>
             </ul>
             <div className={styles.types}>
               <span className={styles.span}>Tipo: </span>
-              {poke.types?.map((t) => (
-                <span className={styles.span}> {t}. </span>
+              {poke.type?.map((t, x) => (
+                <span key={x} className={styles.span}>
+                  {" "}
+                  {capitalizeFirstLetter(t)}.{" "}
+                </span>
               ))}
             </div>
           </div>
