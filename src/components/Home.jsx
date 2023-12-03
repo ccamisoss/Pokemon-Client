@@ -22,7 +22,7 @@ export function Home() {
   const [pokemonsPerPage, setPokemonsPerPage] = useState(12);
   const indexOfLastPokemon = currentPage * pokemonsPerPage;
   const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
-  const currentPokemons = pokemons.slice(
+  const currentPokemons = pokemons?.slice(
     indexOfFirstPokemon,
     indexOfLastPokemon
   );
@@ -62,13 +62,13 @@ export function Home() {
           paginado={paginado}
         />
         <div className={styles.pokeContainer}>
-          {currentPokemons?.map((p) => (
+          {currentPokemons?.map((p, x) => (
             <Pokemon
               name={p.name}
               image={p.img}
               types={p.type}
               id={p.id}
-              key={p.id}
+              key={x}
             />
           ))}
         </div>
