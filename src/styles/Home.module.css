@@ -2,8 +2,8 @@
   padding: 15px;
   display: grid;
   grid-template-columns: 240px 240px 240px;
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
+  grid-column-gap: 3%;
+  grid-row-gap: 6%;
   justify-content: center;
   width: max-content;
   margin: auto;
