@@ -29,8 +29,9 @@ export function Home() {
   const paginado = (pageNumber) => setCurrentPage(pageNumber);
 
   if (
-    currentPokemons.length < 1 ||
-    currentPokemons[0] === "No se encontró el pokemon solicitado"
+    //     currentPokemons.length < 1 ||
+    // currentPokemons[0] === "No se encontró el pokemon solicitado"
+    currentPokemons.length < 1
   ) {
     return (
       <div className={styles.contenedor}>
