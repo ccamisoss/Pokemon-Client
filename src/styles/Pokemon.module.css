@@ -1,5 +1,12 @@
 .pokeImg {
-    display:block
+    display:block;
+    max-height: 100%;
+}
+
+.imgContainer {
+    display: flex;
+    height: 90px;
+    align-items: center;
 }
 
 .contenedor{
