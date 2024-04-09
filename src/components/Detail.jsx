@@ -5,6 +5,7 @@ import { NavBar } from "./NavBar";
 import styles from "../styles/Detail.module.css";
 import { useParams } from "react-router-dom";
 import { capitalizeFirstLetter } from "../utils";
+import defaultImg from '../images/prueba.png'
 
 export function Detail(props) {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ export function Detail(props) {
         <NavBar />
         <div className={styles.pokeContenedor}>
           <h2 className={styles.h2}>{capitalizeFirstLetter(poke.name)}</h2>
-          <img className={styles.img} src={poke.img} alt="" />
+          <img className={styles.img} src={poke.img || defaultImg} alt="" />
           <div className={styles.infoContainer}>
             <ul className={styles.ul}>
               <li>Id: {poke.id}</li>
