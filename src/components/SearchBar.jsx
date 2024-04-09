@@ -14,6 +14,7 @@ export function SearchBar() {
   const [pokeName, setPokeName] = useState("");
   const dispatch = useDispatch();
   const tipos = useSelector((state) => state.tipos);
+  const selects = document.querySelectorAll("select");
 
   const handleFilterByType = (e) => {
     dispatch(filterPokemonsByType(e.target.value));
@@ -25,13 +26,13 @@ export function SearchBar() {
 
   const handleSortByName = (e) => {
     e.preventDefault();
-    if (e.target.value === '-') return;
+    if (e.target.value === "-") return;
     dispatch(orderByName(e.target.value));
   };
 
   const handleSortByAttack = (e) => {
     e.preventDefault();
-    if (e.target.value === '-') return;
+    if (e.target.value === "-") return;
     dispatch(orderByAttack(e.target.value));
   };
 
@@ -43,6 +44,15 @@ export function SearchBar() {
     e.preventDefault();
     dispatch(getByName(pokeName.toLowerCase()));
     setPokeName("");
+  };
+
+  const onReset = () => {
+    // Reset selects
+    selects.forEach((select) => {
+      if (select.value !== "-") select.value = "-";
+    });
+
+    dispatch(filterPokemonsByType("all"));
   };
 
   return (
@@ -59,18 +69,38 @@ export function SearchBar() {
           <button>Buscar Pokemon</button>
         </form>
       </div>
-      <select className={styles.option} defaultValue={"-"} onChange={(e) => handleSortByName(e)}>
-        <option value="-" disabled>Ordenar por nombre</option>
+      <select
+        className={styles.option}
+        defaultValue={"-"}
+        onChange={(e) => handleSortByName(e)}
+        id="sortByNameSelect"
+      >
+        <option value="-" disabled>
+          Ordenar por nombre
+        </option>
         <option value="asc">Ascendente</option>
         <option value="desc">Descendente</option>
       </select>
-      <select className={styles.option} defaultValue={"-"} onChange={(e) => handleSortByAttack(e)}>
-        <option value="-" disabled>Ordenar por fuerza</option>
+      <select
+        className={styles.option}
+        defaultValue={"-"}
+        onChange={(e) => handleSortByAttack(e)}
+      >
+        <option value="-" disabled>
+          Ordenar por fuerza
+        </option>
         <option value="asc">Ascendente</option>
         <option value="desc">Descendente</option>
       </select>
-      <select className={styles.option} defaultValue={"-"} onChange={(e) => handleFilterByType(e)}>
-        <option value="-" disabled>Tipo</option>
+      <select
+        className={styles.option}
+        defaultValue={"-"}
+        onChange={(e) => handleFilterByType(e)}
+        id="filterByTypeSelect"
+      >
+        <option value="-" disabled>
+          Tipo
+        </option>
         {tipos?.map((t, index) => {
           let nombre = t.name?.charAt(0).toUpperCase() + t.name?.slice(1);
           return (
@@ -80,12 +110,19 @@ export function SearchBar() {
           );
         })}
       </select>
-      <select className={styles.option} defaultValue={"-"} onChange={(e) => handleFilterByOrigin(e)}>
-        <option value="-">Origen</option>
+      <select
+        className={styles.option}
+        defaultValue={"-"}
+        onChange={(e) => handleFilterByOrigin(e)}
+        id="filterByOriginSelect"
+      >
+        <option value="-" disabled>
+          Origen
+        </option>
         <option value="db">Creados</option>
         <option value="api">Pokeapi</option>
       </select>
-      <button className={styles.option} onClick={() => dispatch(filterPokemonsByType("all"))}>
+      <button className={styles.option} onClick={onReset}>
         Resetear búsqueda
       </button>
     </div>
